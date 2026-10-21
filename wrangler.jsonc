@@ -1,0 +1,12 @@
+{
+	"$schema": "https://unpkg.com/wrangler/config-schema.json",
+	"name": "property-forum-membership",
+	"compatibility_date": "2026-10-20",
+	// Assets-only Worker. The whole site is static files in this folder; nothing to build.
+	"assets": {
+		"directory": "./",
+		"not_found_handling": "404-page"
+	},
+	// "routes": [{ "pattern": "www.property-forum.co.uk", "custom_domain": true }],
+	"observability": { "enabled": true }
+}
