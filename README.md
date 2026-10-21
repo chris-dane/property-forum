@@ -42,13 +42,23 @@ Search for them. The design notes explain how to create each.
 
 ## Hosting
 
-Any static host works. Three options:
+Currently on GitHub Pages as a preview for Jo, served from the root of `main`
+in https://github.com/chris-dane/property-forum:
+
+- **Preview:** https://chris-dane.github.io/property-forum/
+- **To publish a change:** commit and push from this folder. Pages rebuilds
+  in about a minute. Paths in the pages are relative, so the same files work
+  at the real domain or on any other host without edits. The one exception
+  is the `og:image` tag in `index.html`, which must be an absolute URL and
+  currently points at the preview.
+
+Any static host works if this moves later. Three options:
 
 - **Cloudflare Workers:** `npx wrangler deploy` from this folder uploads it.
   Add the custom domain in the dashboard, or uncomment `routes` in
   `wrangler.jsonc` once the domain is in that Cloudflare account.
-- **GitHub Pages:** push this folder to a repo, Settings > Pages > Source:
-  "Deploy from a branch", branch `main`, folder `/`. No workflow needed.
+- **GitHub Pages** (current): push this folder to a repo, Settings > Pages >
+  Source: "Deploy from a branch", branch `main`, folder `/`. No workflow needed.
 - **Netlify:** drag the folder onto the Netlify dashboard.
 
 ## Design
