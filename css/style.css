@@ -92,25 +92,35 @@ p + p { margin-top: 1em; }
 
 .light { background: var(--auditorium); color: var(--chalk); }
 
+/* Three shortcuts on a one-page site, not a menu. The nav sits in the flow at the
+   top of the hero, so the hero's content centres in whatever space is left and
+   nothing has to guess the nav's height. Links never wrap: on a phone the list
+   moves to its own row under the logo instead. */
 .nav {
-  position: absolute; inset: 0 0 auto 0; z-index: 2;
-  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  --logo-w: clamp(150px, 16vw, 200px);
+  position: relative; z-index: 2; width: 100%;   /* auto side margins from .wrap would otherwise shrink it inside the hero grid */
+  display: grid; grid-template-columns: auto 1fr; align-items: end; column-gap: 1.5rem;
   padding-block: 1.5rem;
 }
-.nav .logo { width: clamp(150px, 16vw, 200px); }
-.nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem 1.75rem; }
-.nav a { text-decoration: none; font-weight: 500; white-space: nowrap; }
+.nav .logo { width: var(--logo-w); }
+.nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-self: end; gap: 1.75rem; }
+/* Sit the link text on the wordmark's baseline rather than the logo box's centre.
+   The baseline is 21/61 of the logo's height above its bottom edge; the second term
+   is the text's own descent below its baseline. */
+.nav ul { padding-bottom: calc(var(--logo-w) * 0.0955 - 0.52rem); }
+.nav a { display: inline-block; text-decoration: none; font-weight: 500; white-space: nowrap; }
 .nav a:hover { text-decoration: underline; }
 
 .hero {
   position: relative; isolation: isolate;
   min-height: 100svh;
-  display: grid; align-items: center;
-  padding-block: clamp(7rem, 16vh, 10rem) clamp(3rem, 8vh, 5rem);
+  display: grid; grid-template-rows: auto 1fr;
+  padding-bottom: clamp(3rem, 8vh, 5rem);
   overflow: hidden;
 }
 .hero-grid {
-  width: 100%;
+  width: 100%; align-self: center;
+  padding-top: clamp(2rem, 6vh, 4rem);
   display: grid; gap: 3rem 4rem;
   grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   align-items: center;
@@ -245,6 +255,10 @@ footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: w
 /* ---------- Responsive ---------- */
 @media (max-width: 56rem) {
   .hero { min-height: 0; }
+  .nav { grid-template-columns: 1fr; row-gap: 0.75rem; align-items: start; }
+  .nav ul { justify-self: start; gap: 1.5rem; padding-bottom: 0; font-size: 0.95rem; }
+  .nav a { padding-block: 0.6rem; }   /* ~44px tap target without larger type */
+  .hero-grid { padding-top: 1.5rem; }
   .hero-grid, .whatson .wrap, .two { grid-template-columns: 1fr; }
   .two > h2 { position: static; }
   .venue-band { grid-auto-rows: minmax(9rem, 32vw); }
@@ -253,8 +267,6 @@ footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: w
   .venue-band figure:nth-child(3) { grid-column: span 6; }
 }
 @media (max-width: 36rem) {
-  .nav ul { gap: 1rem; font-size: 0.95rem; }
-  .hero { padding-top: 6.5rem; }
   .hero-photos img:nth-child(1) { aspect-ratio: 4 / 3; }
   .hero-lamp { width: 120vw; height: 120vw; left: -30vw; bottom: -30vw; }
   .people { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 1rem; }
